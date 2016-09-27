@@ -1,12 +1,13 @@
-angular.module("myApp", ["ngTable"]);
+angular.module("myApp", ["ngTable", "ui.bootstrap"]);
 
 (function() {
     "use strict";
 
     angular.module("myApp").controller("demoController", demoController);
-    demoController.$inject = ["NgTableParams", "$http", "$q"];
+    demoController.$inject = ["NgTableParams", "$http", "$q", "$rootScope"];
 
-    function demoController(NgTableParams, $http, $q) {
+    function demoController(NgTableParams, $http, $q, $rootScope) {
+
         var self = this;
 
         self.tableParams = new NgTableParams({}, {
@@ -14,7 +15,7 @@ angular.module("myApp", ["ngTable"]);
                 var d = $q.defer();
                 $http({
                     method: 'GET',
-                    url: '/entries/'
+                    url: '/entries/' + ($rootScope.timeSpan || 'week')
                 }).then(function (response) {
                     params.total(response.data.total);
                     d.resolve(response.data.result);
@@ -25,9 +26,32 @@ angular.module("myApp", ["ngTable"]);
             }
         });
 
+        $rootScope.$watch(function() {
+            return $rootScope.timeSpan;
+        }, function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                self.tableParams.reload();
+            }
+        });
+
         self.cancel = cancel;
         self.del = del;
         self.save = save;
+        self.invalidate = invalidate;
+
+        function invalidate(entryId) {
+            $http({
+                method: 'POST',
+                url: '/entry/',
+                data: {
+                   entry_id: entryId
+                }
+            }).then(function (response) {
+                self.tableParams.reload();
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        }
 
         function cancel(row, rowForm) {
             var originalRow = resetRow(row, rowForm);
@@ -62,6 +86,28 @@ angular.module("myApp", ["ngTable"]);
         }
     }
 })();
+
+
+(function() {
+    "use strict";
+
+    angular.module("myApp").controller("timespanController", timespanController);
+    timespanController.$inject = ["$http", "$q", "$scope", "$rootScope"];
+
+    function timespanController($http, $q, $scope, $rootScope) {
+        var self = this;
+        self.radioModel = 'week';
+        $scope.$watch(function () {
+            return self.radioModel;
+        }, function (oldValue, newValue) {
+            if (oldValue !== newValue) {
+                $rootScope.timeSpan = self.radioModel;
+            }
+        });
+    }
+
+})();
+
 
 (function() {
     "use strict";

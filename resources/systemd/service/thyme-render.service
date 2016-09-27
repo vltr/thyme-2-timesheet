@@ -1,0 +1,8 @@
+[Unit]
+Description=My Time Management Stuff Renderer
+
+[Service]
+ExecStart=/bin/bash /home/richard/storage/.daily-logs/data/render.sh
+
+#[Install]
+#WantedBy=default.target

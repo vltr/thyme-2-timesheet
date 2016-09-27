@@ -1,0 +1,11 @@
+[Unit]
+Description=Thyme Web Server
+
+[Service]
+ExecStart=/usr/bin/twistd --nodaemon --pidfile= web --port 8181 --path .
+
+WorkingDirectory=/home/richard/storage/.daily-logs/reports
+Restart=always
+
+[Install]
+WantedBy=default.target

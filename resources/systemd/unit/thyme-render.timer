@@ -1,0 +1,12 @@
+[Unit]
+Description=Render Thyme data every hour
+
+[Timer]
+OnCalendar=hourly
+AccuracySec=30s
+RemainAfterElapse=yes
+Triggers=thyme-render.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=My Time Management Stuff
+
+[Service]
+ExecStart=/bin/sh /home/richard/storage/.daily-logs/data/collect.sh
+
+#[Install]
+#WantedBy=default.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Run Thyme every 30 seconds
+
+[Timer]
+#OnCalendar=*-*-* *:*:
+OnCalendar=*:*:0,30
+AccuracySec=30s
+RemainAfterElapse=no
+#Triggers=thyme.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

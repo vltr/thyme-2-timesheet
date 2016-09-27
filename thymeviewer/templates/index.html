@@ -9,45 +9,83 @@
     <link href="static/css/ng-table.min.css" rel="stylesheet">
     <link href="static/custom.css" rel="stylesheet">
   </head>
-  <body>
+  <body ng-app="myApp">
 
     <div class="container-fluid">
-      <nav class="navbar navbar-default">
+
+      <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand">Report</a>
-          </div>
           <!--
-          <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-default">Sign In</button>
-            </form>
-            <form class="navbar-form navbar-right">
-              <div class="form-group">
-                <input type="number" class="form-control input-sm" id="yearInput" placeholder="Year">
-              </div>
-              <div class="form-group">
-                <input type="number" class="form-control input-sm" id="monthInput" placeholder="Month">
-              </div>
-              <div class="form-group">
-                <input type="number" class="form-control input-sm" id="dayInput" placeholder="Day">
-              </div>
-              <button type="submit" class="btn btn-primary btn-sm">Generate</button>
-              </div>
-            </form>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            -->
+            <a class="navbar-brand" href="#">Reports</a>
           </div>
-          -->
+
+          <form class="navbar-form navbar-right" ng-controller="timespanController as tp">
+            <div class="btn-group">
+              <label class="btn btn-primary" ng-model="tp.radioModel" uib-btn-radio="'day'">day</label>
+              <label class="btn btn-primary" ng-model="tp.radioModel" uib-btn-radio="'week'">week</label>
+              <label class="btn btn-warning" ng-model="tp.radioModel" uib-btn-radio="'month'">month</label>
+              <label class="btn btn-danger" ng-model="tp.radioModel" uib-btn-radio="'all'">all</label>
+            </div>
+          </form>
+
+          <!--
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            -->
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Company <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Personal</a></li>
+                  <li><a href="#">Opensource</a></li>
+                  <li><a href="#">VentrixB</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Create new</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </div>
-
-    <div ng-app="myApp" class="container-fluid">
+    <div class="container-fluid">
+      <!--
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+          <div class="list-group list-group-horizontal">
+            <a href="#" class="list-group-item active" ng-model="radioModel" uib-btn-radio="'day'">Day</a>
+            <a href="#" class="list-group-item" ng-model="radioModel" uib-btn-radio="'week'">Week</a>
+            <a href="#" class="list-group-item" ng-model="radioModel" uib-btn-radio="'month'">Month</a>
+            <a href="#" class="list-group-item" ng-model="radioModel" uib-btn-radio="'all'">All</a>
+          </div>
+        </div>
+      </div>
+      -->
       <div class="row">
         <div class="col-md-12" ng-controller="demoController as demo">
           <table ng-table="demo.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
@@ -59,19 +97,19 @@
             </colgroup>
             <tr ng-repeat="row in $data">
               <td title="'Window ID'" filter="{window_id: 'number'}" sortable="'window_id'">
-                <span>{{ row.window_id | angular }}</span>
+                <span>{{ row.window_id }}</span>
               </td>
               <td title="'Label'" filter="{label: 'text'}" sortable="'label'">
-                <span>{{ row.label | angular }}</span>
+                <span>{{ row.label }}</span>
               </td>
               <td title="'Time Spent'" sortable="'time_spent'">
-                <span>{{ row.time_spent | angular }}</span>
+                <span>{{ row.time_spent | number : 4 }}</span>
               </td>
               <td>
-                <button class="btn btn-primary btn-sm" ng-click="demo.save(row)"><span class="glyphicon glyphicon-ok"></span></button>
+                <!-- <button class="btn btn-primary btn-sm" ng-click="demo.save(row)"><span class="glyphicon glyphicon-ok"></span></button>
                 <button class="btn btn-default btn-sm" ng-click="demo.cancel(row)"><span class="glyphicon glyphicon-remove"></span></button>
-                <button class="btn btn-default btn-sm" ng-click="demo.del(row)"><span class="glyphicon glyphicon-pencil"></span></button>
-                <button class="btn btn-danger btn-sm" ng-click="demo.del(row)"><span class="glyphicon glyphicon-trash"></span></button>
+                <button class="btn btn-default btn-sm" ng-click="demo.del(row)"><span class="glyphicon glyphicon-pencil"></span></button> -->
+                <button class="btn btn-danger btn-sm" ng-click="demo.invalidate(row.min_entry_id)"><span class="glyphicon glyphicon-trash"></span></button>
               </td>
             </tr>
           </table>
@@ -81,6 +119,9 @@
 
     <script src="static/js/lodash.min.js"></script>
     <script src="static/js/angular.min.js"></script>
+    <script src="static/js/angular-animate.min.js"></script>
+    <script src="static/js/angular-touch.min.js"></script>
+    <script src="static/js/ui-bootstrap-tpls-2.1.4.min.js"></script>
     <script src="static/js/ng-table.min.js"></script>
     <script src="static/app.js"></script>
   </body>

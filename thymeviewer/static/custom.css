@@ -1,8 +1,79 @@
 body {
-  padding-top: 20px;
+  padding-top: 70px;
   padding-bottom: 20px;
 }
 
-.navbar {
+/*.navbar {
   margin-bottom: 20px;
+}
+*/
+
+.list-group-horizontal .list-group-item {
+    display: inline-block;
+}
+.list-group-horizontal .list-group-item {
+    margin-bottom: 0;
+    margin-left:-4px;
+    margin-right: 0;
+}
+.list-group-horizontal .list-group-item:first-child {
+    border-top-right-radius:0;
+    border-bottom-left-radius:4px;
+}
+.list-group-horizontal .list-group-item:last-child {
+    border-top-right-radius:4px;
+    border-bottom-left-radius:0;
+}
+
+.date-picker,
+.date-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    color: rgb(75, 77, 78);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.date-container {
+    padding: 0px 40px;
+}
+
+.date-picker h2, .date-picker h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+}
+
+.date-container{
+    text-align: center;
+}
+.date-picker span.fa {
+    position: absolute;
+    cursor: pointer;
+}
+.date-picker span.fa[data-method="subtract"] {
+    left: 0px;
+}
+.date-picker span.fa[data-method="add"] {
+    right: 0px;
+}
+
+
+@media (min-width: 768px) and (max-width: 1010px) {
+    .date-picker h2{
+        font-size: 1.5em;
+        font-weight: 400;
+    }
+    .date-picker h4 {
+        font-size: 1.1em;
+    }
+    .date-picker span.fa {
+        font-size: 3em;
+    }
 }
